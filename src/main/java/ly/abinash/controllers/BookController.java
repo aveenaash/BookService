@@ -35,6 +35,12 @@ public class BookController {
 		return bookService.getSingleDummyBook(name);
 	}
 	
+	@RequestMapping(value = "/author/{authorId}", method = RequestMethod.POST)
+	public void addBookToAuthor(@PathVariable Long authorId, @RequestBody BookDto bookDto) 
+			throws Exception {
+		bookService.saveBookToAuthor(authorId, bookDto);
+	}
+	
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public void saveBook(@RequestBody BookDto bookDto) {
 		bookService.saveBook(bookDto);

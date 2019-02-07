@@ -12,6 +12,7 @@ public class BookDto implements Serializable {
 	private String name;
 	private String description;
 	private int year;
+	private AuthorDto author;
 
 	public int getId() {
 		return id;
@@ -43,6 +44,14 @@ public class BookDto implements Serializable {
 
 	public void setYear(int year) {
 		this.year = year;
+	}
+
+	public AuthorDto getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(AuthorDto author) {
+		this.author = author;
 	}
 
 	@Override

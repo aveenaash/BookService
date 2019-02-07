@@ -3,12 +3,22 @@ package ly.abinash.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ly.abinash.dtos.BookDto;
+import ly.abinash.entities.AuthorEntity;
+import ly.abinash.entities.BookEntity;
+import ly.abinash.repositories.AuthorRepository;
+import ly.abinash.repositories.BookRepository;
 
 @Service
 public class BookService {
+	
+	@Autowired
+	private AuthorRepository authorRepository;
+	@Autowired
+	private BookRepository bookRepository;
 	
 	public List<BookDto> getDummyBooks(){
 		List<BookDto> bookList = new ArrayList<BookDto>();
@@ -57,6 +67,21 @@ public class BookService {
 	
 	public void updateBook(int id, BookDto bookDto) {
 		System.out.println("Book updated : " +id+ "  : " + bookDto.toString());
+	}
+	
+	public void saveBookToAuthor(Long authorId, BookDto bookDto) throws Exception {
+		AuthorEntity author = authorRepository.findById(authorId);
+		if(author == null) {
+			throw new Exception("Author Not Found. Please create it.");
+		} else {
+			BookEntity bookEntity = new BookEntity();
+			bookEntity.setName(bookDto.getName());
+			bookEntity.setDescription(bookDto.getDescription());
+			bookEntity.setYear(bookDto.getYear());
+			bookEntity.setAuthor(author);
+			bookRepository.save(bookEntity);	
+			
+		}
 	}
 	
 }
